@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#12243b">
+  <meta name="description" content="Turn analytic STEP exhaust cone faces into flat STEP and DXF sheet cutting profiles in your browser.">
+  <title>Cone Flat Studio · STEP to laser-cut patterns</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="mark">C<span>·</span></span><span>CONE <b>FLAT</b> STUDIO</span></a>
+    <nav aria-label="Main navigation"><a class="active" href="index.html" aria-current="page">Studio</a><a href="tutorial.html">Tutorial</a><span class="privacy">● Browser-local CAD</span></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div><div class="eyebrow">SHEET METAL / DEVELOPMENT WORKSPACE</div><h1>From cone to <em>flat blank.</em></h1><p>Read analytic cone faces from a STEP model. Develop the surface into a true-size annular sector, then send STEP or DXF profiles to your laser shop.</p><div class="hero-actions"><button class="primary" id="open-file">Open STEP model ↗</button><button class="secondary" id="load-example">Explore supplied example</button></div></div>
+      <aside class="hero-card"><span>HOW IT WORKS</span><div class="mini-cone" aria-hidden="true"><svg viewBox="0 0 250 170"><path d="M49 124 97 29 159 29 208 124" fill="none" stroke="#b3c8d4" stroke-width="2"/><ellipse cx="128" cy="124" rx="79" ry="19" fill="none" stroke="#f1a16d" stroke-width="2"/><ellipse cx="128" cy="29" rx="31" ry="8" fill="none" stroke="#b3c8d4" stroke-width="2"/><path d="M130 120 206 55" stroke="#f1a16d" stroke-width="2" stroke-dasharray="5 5"/><path d="M205 55h22" stroke="#f1a16d" stroke-width="2"/></svg></div><strong>3D cone → 2D sector</strong><p>Preserves slant length and circumference along the developed surface.</p></aside>
+    </section>
+    <section class="notice" role="note"><span class="notice-icon">i</span><div><strong>Manufacturing check</strong><p>Patterns describe the selected analytic cone surface. Confirm material thickness, seam allowance, kerf, bend and weld process, and any trim at the ends with your fabricator before cutting. STEP exports are planar sheet faces with zero thickness; DXF exports are cut contours.</p></div></section>
+    <section class="workspace-section" aria-labelledby="import-title"><div class="section-head"><div><span class="kicker">01 / INPUT</span><h2 id="import-title">Load a STEP model</h2></div><span class="section-aside">AP203 · AP214 · AP242 text STEP</span></div>
+      <div class="upload-grid"><div id="drop-zone" class="drop-zone" tabindex="0" role="button" aria-label="Choose or drop a STEP file"><div class="upload-icon">↥</div><strong>Drop a .step or .stp file here</strong><span>or click to choose a model from your computer</span><small>Read locally in your browser. No upload or account required.</small></div><div class="example-panel"><span class="eyebrow">SUPPLIED EXAMPLE</span><strong>27-PTN-ENG-EXH-Cone-1.STEP</strong><p>Two solid bodies, each represented by two half-faces. The tool joins the half-faces and identifies the 18° and 30° sheet blanks.</p><button class="text-action" id="example-inline">Open example geometry →</button></div></div><input id="file-input" type="file" accept=".step,.stp,.STEP,.STP" hidden><p class="status" id="status" role="status">Load a model or open the supplied example to begin.</p>
+    </section>
+    <section class="workspace-section" id="results" hidden><div class="section-head"><div><span class="kicker">02 / RESULTS</span><h2>Developed patterns</h2></div><span class="section-aside" id="source-name"></span></div>
+      <div class="summary-grid"><div><span>SHEET BLANKS</span><strong id="count-patterns">—</strong></div><div><span>SOLID BODIES</span><strong id="count-bodies">—</strong></div><div><span>CONE FACES READ</span><strong id="count-faces">—</strong></div><div><span>OUTPUT UNITS</span><strong>mm</strong></div></div>
+      <div class="content-grid"><section class="list-panel" aria-label="Detected patterns"><div class="panel-head"><strong>Cut profiles</strong><div class="small-actions"><button id="select-all">Select all</button><button id="select-none">Clear</button></div></div><div id="pattern-list" class="pattern-list"></div><div class="list-foot"><span id="selected-count">0 selected</span><label>Display <select id="display-unit"><option value="mm">mm</option><option value="in">inches</option></select></label></div></section>
+        <section class="drawing-panel" aria-label="Selected flat pattern"><div class="panel-head"><strong id="preview-title">Pattern preview</strong><span>TRUE GEOMETRY · SCALED TO FIT</span></div><div id="preview" class="preview"></div><div class="dimension-grid" id="dimensions"></div></section></div>
+      <details class="analysis-details" id="analysis-details"><summary>STEP analysis notes <span id="note-count"></span></summary><ul id="analysis-notes"></ul></details>
+    </section>
+    <section class="workspace-section" id="exports" hidden><div class="section-head"><div><span class="kicker">03 / OUTPUT</span><h2>Download cut geometry</h2></div><span class="section-aside">Selected patterns only · 1:1 millimetres</span></div><div class="export-grid"><article><div class="export-icon">◫</div><h3>STEP sheet faces</h3><p>One analytic, planar, zero-thickness sheet face per blank. The ZIP contains a separate STEP file for each selected pattern.</p><button class="primary export" data-kind="step">Download STEP files</button></article><article><div class="export-icon">▱</div><h3>DXF cut profiles</h3><p>One R12 DXF per blank, with exact ARC and LINE entities on the CUT layer. The ZIP keeps the files separate.</p><button class="primary export" data-kind="dxf">Download DXF files</button></article><article><div class="export-icon">≡</div><h3>Dimension report</h3><p>CSV with 3D radii, cone half-angle, slant width, flat radii, sector sweep, and source face IDs.</p><button class="secondary export" data-kind="csv">Download CSV</button></article></div><p class="export-note">Files contain no kerf offset, weld overlap, tabs, or bend compensation. Add those in your manufacturing workflow.</p></section>
+    <section class="footer-cta"><div><span class="kicker">NEED A WALKTHROUGH?</span><h2>Every control, step by step.</h2></div><a class="primary" href="tutorial.html">Read the tutorial ↗</a></section>
+  </main>
+  <footer><span>CONE FLAT STUDIO</span><span>Analytic STEP development · browser-local</span></footer>
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>
